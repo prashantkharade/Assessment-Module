@@ -1,3 +1,5 @@
+
+
 <div class="w-full h-12 bg-slate-300 flex-auto justify-center">
 	<nav class="pt-4 pl-[400px] text-justify text-black-500 flex-auto">
 		<a href="../title"

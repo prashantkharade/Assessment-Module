@@ -1,15 +1,18 @@
-<script>
-	import '../app.css';
-	import SecondNavbar from '../components/SecondNavbar.svelte';
+<script lang="ts">
+	import '../app.pcss';
+	// import SecondNavbar from '../components/SecondNavbar.svelte';
+	import type { LayoutData } from './$types';
+	import { page } from '$app/stores';
+	export let data: LayoutData;
+
+	// console.log($page);
 </script>
 
 <header>
-	
 	<!-- Navbar -->
 	<nav class=" p-3 h-14 w-full bg-sky-700">
 		<div class=" flex justify-between">
-			
-				<!-- <svg
+			<!-- <svg
 					class="h-5 w-5 text-slate-50 mt-1"
 					viewBox="0 0 24 24"
 					fill="none"
@@ -21,7 +24,7 @@
 					<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
 					<path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
 				</svg> -->
-				<h1 class="flex flex-row">
+			<h1 class="flex flex-row">
 				<svg class="h-7 w-7 text-slate-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path
 						stroke-linecap="round"
@@ -143,7 +146,7 @@
 				<!-- Dropdown Buttons  -->
 				<div class="flex flex-row font-bold">
 					<!-- File Dropdown Button -->
-					<div class="flex flex-row mr-4 hover:bg-gray-400 ">
+					<div class="flex flex-row mr-4 hover:bg-gray-400">
 						<img src="/menu.png" alt="menu" class="w-[10px] h-[10px] ml-2 mt-3" />
 						<button
 							id="fileDropdownLink"
@@ -244,7 +247,7 @@
 							</svg>
 						</button>
 					</div>
-			<!-- <svg class="h-8 w-8 text-black-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<!-- <svg class="h-8 w-8 text-black-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path
 					stroke-linecap="round"
 					stroke-linejoin="round"
@@ -252,25 +255,28 @@
 					d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 				/>
 			</svg> -->
-			<div>
-				<svg
-					class="h-10 w-10 text-red-200 flex flex-row"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-					/>
-				</svg>
+					<div>
+						<svg
+							class="h-10 w-10 text-red-200 flex flex-row"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+					</div>
+				</div>
 			</div>
 		</div>
 	</nav>
-
 </header>
 <!-- <SecondNavbar /> -->
 <slot />
-<footer class="h-12 w-full bg-cyan-500 text-center text-slate-950 font-bold">Mr. Prashant kharade</footer>
+<footer class=" h-12 w-full bg-cyan-500 text-center text-slate-950 font-bold text-xl">
+	Mr. Prashant kharade
+</footer>
