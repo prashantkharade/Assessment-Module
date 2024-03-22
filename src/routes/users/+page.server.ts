@@ -11,11 +11,13 @@ import { getUserRoles } from '../api/services/types';
 
 export const load: PageServerLoad = async (event: RequestEvent) => {
 	try {
+		const userId = event.params.userId;
 		let roles: PersonRole[] = await getUserRoles();
 		if (!roles || roles.length === 0) {
 			roles = UserRoles;
 		}
 		return {
+			userId,
 			message: 'Common data successfully retrieved!',
 			roles,
 		};
