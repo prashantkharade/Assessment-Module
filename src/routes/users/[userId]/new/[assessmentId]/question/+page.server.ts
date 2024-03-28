@@ -1,40 +1,42 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { RequestEvent, ServerLoadEvent } from '@sveltejs/kit';
-import { addScoringCondition, createAssessmentNode, searchAssessmentNodes } from '../../../../../api/services/node';
+import { createQuestionNode, getQuestionsByTemplateId } from '../../../../../api/services/question';
 import type { PageServerLoad } from './$types';
 import { zfd } from 'zod-form-data';
 import { z } from 'zod';
-import { getAssessmentTemplateById } from '../../../../../api/services/assessment-template';
+import { getFormTemplateById } from '../../../../../api/services/form-template';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
 export const load: PageServerLoad = async (event: ServerLoadEvent) => {
-	const sessionId = event.cookies.get('sessionId');
+	// const sessionId = event.cookies.get('sessionId');
 
 	event.depends('app:allNodes')
 
 	try {
 		const assessmentTemplateId = event.params.assessmentId;
-		const searchParams = {
-			templateId: assessmentTemplateId
-		};
+		// const searchParams = {
+		// 	templateId: assessmentTemplateId
+		// };
 		console.log("Assessment id is", assessmentTemplateId);
-		console.log("Assessment search params are", searchParams);
-		const response = await getAssessmentTemplateById(sessionId, assessmentTemplateId);
-		const _assessmentNodes = await searchAssessmentNodes(sessionId, searchParams);
+		// console.log("Assessment search params are", searchParams);
+		const response = await getFormTemplateById( assessmentTemplateId);
+		const _assessmentNodes = await getQuestionsByTemplateId( assessmentTemplateId);
 
+		// console.log(response)
+		// console.log(_assessmentNodes)
 		if (response.Status === 'failure' || response.HttpCode !== 200) {
 			throw error(response.HttpCode, response.Message);
+			// console.log("This is from 201",response,"from server");
+
 		}
-		const assessmentTemplate = response.Data.AssessmentTemplate;
-		const assessmentNodes = _assessmentNodes.Data.AssessmentNodeRecords.Items;
-		const id = response.Data.AssessmentTemplate.id;
-		console.log("assessmentTemplate", assessmentTemplate)
+		const assessmentTemplate = response;
+		const assessmentNodes = _assessmentNodes.Data;
+		// const id = response.Data.AssessmentTemplate.id;
+		// console.log("assessmentTemplate", assessmentNodes)
 		return {
-			// location: `${id}/edit`,
-			assessmentTemplateId,
-			sessionId,
+			assessmentTemplateId,			
 			assessmentTemplate,
 			assessmentNodes,
 			message: response.Message
@@ -88,7 +90,7 @@ export const actions = {
 		}
 
 		const parentNode = '2b3b3ea7-d55f-46fb-901f-380a92be0059';
-		const response = await createAssessmentNode(
+		const response = await createQuestionNode(
 			sessionId,
 			assessmentId,
 			parentNode,
@@ -103,7 +105,6 @@ export const actions = {
 		);
 
 		const nodeId = response.Data.AssessmentNode.id;
-		const scoringCondition = await addScoringCondition(sessionId, assessmentId, nodeId, result.resolutionScore);
 
 		// console.log('scoringCondition', scoringCondition);
 

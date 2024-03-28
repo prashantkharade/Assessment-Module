@@ -1,7 +1,7 @@
 import type { LoginModel } from '$lib/types/domain.models';
 import { Helper } from '$lib/utils/helper';
 import { API_CLIENT_INTERNAL_KEY, BACKEND_API_URL } from '$env/static/private';
-import { post_ } from './common';
+import { get_, post_ } from './common';
 ////////////////////////////////////////////////////////////////
 
 export const login = async (username: string, password: string, loginRoleId: number) => {
@@ -50,7 +50,15 @@ const getLoginModel = (username: string, password: string, loginRoleId: number):
 
 export const logout = async (sessionId: string) => {
 	const url = BACKEND_API_URL + `/users/logout`;
-	return await post_(sessionId, url, {}, true);
+	return await post_(sessionId, url,);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////
+
+
+export const userLogin = async () => {
+	// try {
+		const url = BACKEND_API_URL + `/users/all`;
+		return await get_(url);
+		
+	}

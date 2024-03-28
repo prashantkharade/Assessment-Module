@@ -12,9 +12,10 @@
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	export let data: PageServerData;
-	console.log(data.assessmentTemplate.Title);
+	console.log(data);
 	$: questionList = data.assessmentNodes;
 	const templateId = $page.params.assessmentId;
+	const userId = $page.params.userId;
 
 	$: isEmpty = !title || !queryType;
 
@@ -28,7 +29,7 @@
 	const handleDelete = async (e, id) => {
 		const assessmentNodeId = id;
 		await Delete({
-			sessionId: data.sessionId,
+			// sessionId: data.sessionId,
 			assessmentTemplateId: templateId,
 			assessmentNodeId: assessmentNodeId
 		});
@@ -53,9 +54,9 @@
 	}
 </script>
 
-<SecondNavbar />
+<SecondNavbar {userId} />
 
-<div class="flex  flex-row p-5">
+<div class="flex flex-row p-5">
 	<div class="m-2 h-fit w-[70%] rounded-3xl bg-slate-200 p-2 shadow-xl shadow-black">
 		<!-- <section class=""> -->
 		<form action="?/createAssessmentNodeAction" method="post" use:enhance class="w-full">
@@ -69,7 +70,7 @@
 							Enter Form Question
 						</td>
 					</tr>
-					<tr class="">
+					<!-- <tr class="">
 						<td>
 							<h1 class="ml-10 text-lg font-bold text-slate-700">Enter node type</h1>
 						</td>
@@ -79,13 +80,12 @@
 								placeholder="Select node type here..."
 								class="select ml-[1%] h-12 w-[90%] rounded-xl border p-2"
 							>
-								<!-- on:change={(val) => onSelectNodeType(val)} -->
 								<option>Question</option>
 								<option>Message</option>
 								<option>Node list</option>
 							</select>
 						</td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td>
 							<h1 class="ml-10 text-lg font-bold text-slate-700">Add your question ?</h1>
@@ -97,31 +97,6 @@
 								placeholder="Add your question ?"
 								class="ml-[1%] h-12 w-[90%] rounded-xl border focus:border-blue-300 focus:outline-none focus:ring"
 							/>
-						</td>
-					</tr>
-
-					<tr class="">
-						<td>
-							<h1 class="ml-10 text-lg font-bold text-slate-700">Enter Parent node here...</h1>
-						</td>
-						<td class="py-2">
-							<select
-								name="parentNodeId"
-								class="select ml-[1%] h-12 w-[90%] rounded-xl border"
-								placeholder="Select node type here..."
-							>
-								<!-- <option value="2b3b3ea7-d55f-46fb-901f-380a92be0059"
-										>2b3b3ea7-d55f-46fb-901f-380a92be0059</option
-									>
-									<option value="2b3b3ea7-d55f-46fb-901f-380a92be0059"
-										>2b3b3ea7-d55f-46fb-901f-380a92be0059</option
-									> -->
-								{#each questionList as node}
-									<option value={node.id}
-										>{node.NodeType} - {node.Title} - {node.DisplayCode}</option
-									>
-								{/each}
-							</select>
 						</td>
 					</tr>
 
@@ -139,33 +114,28 @@
 					</tr>
 
 					<tr class="">
-						<td
-							><h1 class="ml-10 text-lg font-bold text-slate-700">
-								serve List Node Children at once
-							</h1></td
-						>
+						<td>
+							<h1 class="ml-10 text-lg font-bold text-slate-700">Enter Parent Section here...</h1>
+						</td>
 						<td class="py-2">
-							<input
-								placeholder="serve List Node Children at once"
-								type="checkbox"
-								name="serveListNodeChildrenAtOnce"
-								value="true"
-								class="checkbox ml-[1%] border"
-							/>
+							<select
+								name="parentNodeId"
+								class="select ml-[1%] h-12 w-[90%] rounded-xl border"
+								placeholder="Select node type here..."
+							>
+								<!-- <option value="2b3b3ea7-d55f-46fb-901f-380a92be0059"
+										>2b3b3ea7-d55f-46fb-901f-380a92be0059</option
+									>
+									<option value="2b3b3ea7-d55f-46fb-901f-380a92be0059"
+										>2b3b3ea7-d55f-46fb-901f-380a92be0059</option
+									> -->
+								{#each questionList as node}
+									<option value={node.id}> {node.Title} - {node.DisplayCode}</option>
+								{/each}
+							</select>
 						</td>
 					</tr>
-					<tr>
-						<td><h1 class="ml-10 text-lg font-bold text-slate-700">Enter sequence here..</h1></td>
-						<td class="py-2"
-							><input
-								type="number"
-								name="sequence"
-								placeholder="Enter sequence here..."
-								min="1"
-								class="input ml-[1%] h-12 w-[90%] rounded-xl"
-							/></td
-						>
-					</tr>
+
 					<tr class="">
 						<td><h1 class="ml-10 text-lg font-bold text-slate-700">Enter question type..</h1></td>
 						<td class="py-2">
@@ -203,6 +173,32 @@
 								</select>
 							</button>
 						</td>
+					</tr>
+
+					<tr class="">
+						<td><h1 class="ml-10 text-lg font-bold text-slate-700">Score</h1></td>
+						<td class="py-2">
+							<input
+								placeholder="serve List Node Children at once"
+								type="number"
+								name="Enter score for the question here "
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td
+							><h1 class="ml-10 text-lg font-bold text-slate-700">
+								Enter Correct Answer here..
+							</h1></td
+						>
+						<td class="py-2"
+							><input
+								type="number"
+								name="sequence"
+								placeholder="Enter Correct answer here..."
+								class="input ml-[1%] h-12 w-[90%] rounded-xl"
+							/></td
+						>
 					</tr>
 				</tbody>
 			</table>
@@ -267,7 +263,7 @@
 					{/each}
 				</div>
 			{:else if !queryType}
-				<div class="text-red-500 text-center">No type selected.</div>
+				<div class="text-center text-red-500">No type selected.</div>
 			{/if}
 
 			<button class="relative ml-[83%] h-10 w-32 rounded border-r-2 bg-slate-500"
@@ -282,7 +278,7 @@
 		<div
 			class="sticky top-0 z-10 h-12 rounded-xl bg-slate-400 text-center text-xl font-bold text-slate-700"
 		>
-			<p class="">{data.assessmentTemplate.Title}</p>
+			<p class="">{data.assessmentTemplate.Data.Title}</p>
 		</div>
 		<div class="max-h-[calc(100%-3rem)] overflow-y-auto">
 			{#if questionList && questionList.length > 0}

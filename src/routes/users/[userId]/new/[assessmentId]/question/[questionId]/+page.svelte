@@ -7,10 +7,12 @@
 	import SecondNavbar from '$lib/components/SecondNavbar.svelte';
 	import { enhance } from '$app/forms';
 	import type { PageServerData } from '../$types';
+	import { page } from '$app/stores';
 
 	//////////////////////////////////////////////////////////////////
 
 	export let data: PageServerData;
+	const userId = $page.params.userId;
 	// console.log('This data is from svelte page', data.assessmentNodes.QueryResponseType);
 	let queryResponseTypes = data.assessmentNodes.QueryResponseType;
 	const assessmentNodes = data.assessmentNodes;

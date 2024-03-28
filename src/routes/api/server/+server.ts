@@ -1,21 +1,16 @@
 import type { RequestEvent } from '@sveltejs/kit';
-import { deleteAssessmentNode } from '../services/node';
+import { deleteQuestion } from '../services/question';
 
 //////////////////////////////////////////////////////////////
 
 export const DELETE = async (event: RequestEvent) => {
 	const request = event.request;
 	const data = await request.json();
-	console.log(`${event} this is data`)
+	// console.log(`${event} this is data`)
 
 	try {
-		console.log('Inside assessment node server endpoints',data.assessmentNodeId);
-		console.log('Inside assessment node server endpoints',data.assessmentTemplateId);
-		console.log('Inside assessment node server endpoints',data.sessionId);
-		const response = await deleteAssessmentNode(
-			data.sessionId,
-			data.assessmentTemplateId,
-			data.assessmentNodeId
+		const response = await deleteQuestion(
+			data.questionId,
 		);
 		return new Response(response.message);
 	} catch (err) {

@@ -8,21 +8,25 @@
 	////////////////////////////////////////////////////////////////////
 
 	export let data: PageServerData;
-	personRolesStore.set(data.roles);
-	LocalStorageUtils.setItem('personRoles', JSON.stringify(data.roles));
-	let personRoles = [],
-		loginRoleId = 1;
+	// personRolesStore.set(data.roles);
+	// LocalStorageUtils.setItem('personRoles', JSON.stringify(data.roles));
+	// let personRoles = [],
+	// 	loginRoleId = 1;
 
-	if (browser) {
-		const tmp = LocalStorageUtils.getItem('personRoles');
-		personRoles = JSON.parse(tmp);
-		const adminRole = personRoles?.find((x) => x.RoleName === 'System admin');
-		if (adminRole) {
-			loginRoleId = adminRole.id;
-		}
-		LocalStorageUtils.removeItem('prevUrl');
-	}
+	// if (browser) {
+	// 	const tmp = LocalStorageUtils.getItem('personRoles');
+	// 	personRoles = JSON.parse(tmp);
+	// 	const adminRole = personRoles?.find((x) => x.RoleName === 'System admin');
+	// 	if (adminRole) {
+	// 		loginRoleId = adminRole.id;
+	// 	}
+	// 	LocalStorageUtils.removeItem('prevUrl');
+	// }
 
+	let user = data.response.Data;
+	let name = user.Username;
+	// console.log(name)
+	// console.log("from page ",user)
 	var systemName = 'Form Builder assessment Module';
 </script>
 
@@ -239,7 +243,7 @@
 				use:enhance
 			>
 				<div class="hidden h-6 w-full bg-fuchsia-700">
-					<input name="loginRoleId" class="hidden" value={loginRoleId} />
+					<!-- <input name="loginRoleId" class="hidden" value={loginRoleId} /> -->
 				</div>
 				<div class="h-50 mt-5 w-full justify-center">
 					<label class="mb-2" for="username">

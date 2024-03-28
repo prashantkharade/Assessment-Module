@@ -1,5 +1,5 @@
 import { error, type Actions, type RequestEvent } from "@sveltejs/kit";
-import { searchAssessmentTemplates } from "../../../api/services/assessment-template";
+import { searchAssessmentTemplates } from "../../../api/services/form-template";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ cookies, depends }) => {

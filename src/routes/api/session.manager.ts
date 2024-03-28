@@ -34,7 +34,7 @@ export class SessionManager {
         // console.log("session id : ",sessionId);
         const session = SessionManager._sessions.find((x) => x.sessionId === sessionId);
         // console.log("Access token for session",session);
-        
+
         if (!session) return Promise.resolve(null);
         // console.log(`Retrieving existing session: ${JSON.stringify(session, null, 2)}`);
         return Promise.resolve(session);

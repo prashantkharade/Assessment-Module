@@ -7,15 +7,15 @@
 
 	//////////////////////////////////////////////////////////////////////
 	export let data: PageServerData;
-	const assessments = data.assessmentTemplate.Items;
-	console.log(data, 'This is data from new');
+	const assessments = data.assessmentTemplate;
+	// console.log(assessments, 'This is data from new');
 	let userId = $page.params.userId;
 	// console.log(userId, 'This is from user new page');
 	export let form;
 </script>
 
 <SecondNavbar {userId} />
-<div class="flex h-screen flex-row p-10">
+<div class="my-auto flex h-fit flex-row p-10">
 	<div class="w-[65%] rounded-xl bg-slate-300 p-8 shadow-xl shadow-slate-800">
 		<form use:enhance method="post" action="?/new">
 			<h1 class="text-center text-2xl font-bold text-slate-600">Create Assessment Template</h1>
@@ -28,39 +28,48 @@
 				placeholder="Enter title here..."
 				class="my-2 w-full rounded-md border p-2 shadow-lg shadow-slate-500 focus:border-blue-300 focus:outline-none focus:ring"
 			/>
+
 			<label for="description" class="text-md my-5">Description</label>
 			<textarea
-				name="Description"
+				name="description"
 				placeholder="Enter description here..."
 				class="my-2 w-full rounded-md border border-gray-300 p-2 shadow-lg shadow-slate-500 focus:border-blue-300 focus:outline-none focus:ring"
 			></textarea>
+
 			<label for="type" class=" text-md">Type</label>
 			<select
 				class="select my-2 w-full rounded-md border border-gray-300 p-2 shadow-lg shadow-slate-500 focus:border-blue-300 focus:outline-none focus:ring"
 				name="type"
 				placeholder="Select type here..."
 			>
-				<option class="bg-white text-gray-700" value="Daily Update">Daily Update</option>
-				<option class="bg-white text-gray-700" value="Symptoms">Symptoms</option>
 				<option class="bg-white text-gray-700" value="Survey">Survey</option>
-				<option class="bg-white text-gray-700" value="Protocol">Protocol</option>
-				<option class="bg-white text-gray-700" value="Custom">Custom</option>
+				<option class="bg-white text-gray-700" value="Questionnaire">Questionnaire</option>
+				<option class="bg-white text-gray-700" value="TestPaper">TestPaper</option>
+				<option class="bg-white text-gray-700" value="DataCollection">DataCollection</option>
 			</select>
 
-			<label for="Provider" class=" text-md">Provider</label>
+			<label for="currentVersion" class=" text-md">Current Version</label>
 			<input
 				type="text"
-				name="provider"
-				placeholder="Enter provider here"
+				name="currentVersion"
+				placeholder="Enter Display Code here"
 				class="my-2 w-full rounded-md border border-gray-300 p-2 shadow-lg shadow-slate-500 focus:border-blue-300 focus:outline-none focus:ring"
 			/>
 
-			<label for="providerAssessmentCode" class=" text-md">Provider Assessment Code</label>
+			<label for="displayCode" class=" text-md">Display Code</label>
 			<input
 				type="text"
-				name="providerAssessmentCode"
-				placeholder="Enter provider assessment code here..."
+				name="displayCode"
+				placeholder="Enter Display Code here"
 				class="my-2 w-full rounded-md border border-gray-300 p-2 shadow-lg shadow-slate-500 focus:border-blue-300 focus:outline-none focus:ring"
+			/>
+
+			<label for="defaultSectionNumbering" class="text-md">Default Section Numbering</label>
+			<input
+				type="checkbox"
+				name="defaultSectionNumbering"
+				placeholder="Enter Default Section Numbering here..."
+				class="mx-5 my-4 rounded-md border border-gray-300 p-2 shadow-lg shadow-slate-500 focus:border-blue-300 focus:outline-none focus:ring"
 			/>
 
 			<div class="flex justify-end p-2">
@@ -74,7 +83,6 @@
 	</div>
 	<div class="ml-5 w-[35%] rounded-xl bg-slate-300 shadow-xl shadow-slate-800">
 		<ul class="h-full rounded-lg p-1 shadow-md">
-			<!-- <tbody class="p-3"> -->
 			{#each assessments as a}
 				<a href="new/{a.id}/question"
 					><li
@@ -84,7 +92,6 @@
 					</li></a
 				>
 			{/each}
-			<!-- </tbody> -->
 		</ul>
 	</div>
 </div>

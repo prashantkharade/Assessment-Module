@@ -1,5 +1,5 @@
 import { zfd } from 'zod-form-data';
-import { getAssessmentNodeById, getQueryResponseTypes, searchAssessmentNodes, updateAssessmentNode } from '../../../../../../api/services/node';
+import { getAssessmentNodeById, getQueryResponseTypes, searchAssessmentNodes, updateAssessmentNode } from '../../../../../../api/services/question';
 import { error, redirect, type RequestEvent, type ServerLoadEvent } from '@sveltejs/kit';
 import { z } from 'zod';
 import type { PageServerLoad } from '../$types';
